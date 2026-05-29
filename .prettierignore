@@ -6,3 +6,8 @@ node_modules
 .setup-archive
 package-lock.json
 public
+
+# Template docs use __PLACEHOLDER__ tokens that Prettier would rewrite to **bold**,
+# breaking setup.sh's placeholder replacement. Keep them out of formatting.
+README.md
+CLAUDE.md

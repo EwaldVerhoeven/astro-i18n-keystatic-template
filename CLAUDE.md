@@ -1,4 +1,4 @@
-# CLAUDE.md — **PROJECT_NAME**
+# CLAUDE.md — __PROJECT_NAME__
 
 Project gegenereerd uit [`EwaldVerhoeven/astro-i18n-keystatic-template`](https://github.com/EwaldVerhoeven/astro-i18n-keystatic-template).
 Dit bestand is voor AI-coding agents (Claude Code en vergelijkbaar). Mens-georiënteerde uitleg staat in [README.md](README.md).

@@ -1,4 +1,4 @@
-# **PROJECT_NAME**
+# __PROJECT_NAME__
 
 Klant-/projectsite gebouwd met de `astro-i18n-keystatic-template`.
 
