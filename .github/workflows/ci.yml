@@ -1,0 +1,94 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  shellcheck:
+    name: shellcheck setup.sh + verify-setup.sh
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run shellcheck
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y shellcheck jq
+          shellcheck setup.sh scripts/verify-setup.sh
+
+  lint:
+    name: ESLint + Prettier check
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: '20', cache: 'npm' }
+      - run: npm ci
+      - run: npm run lint
+      - run: npm run format:check
+
+  baseline-build:
+    name: Build raw template (with placeholders)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: '20', cache: 'npm' }
+      - run: npm ci
+      - run: npm run check
+      - run: npm run build
+
+  setup-matrix:
+    name: Setup + build (keystatic=${{ matrix.keystatic }}, blog=${{ matrix.blog }}, netlify=${{ matrix.netlify }})
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - { keystatic: 'y', blog: 'y', netlify: 'y', adapter: '' }
+          - { keystatic: 'n', blog: 'y', netlify: 'y', adapter: '' }
+          - { keystatic: 'y', blog: 'n', netlify: 'y', adapter: '' }
+          - { keystatic: 'y', blog: 'y', netlify: 'n', adapter: 'node-standalone' }
+          - { keystatic: 'n', blog: 'n', netlify: 'y', adapter: '' }
+          - { keystatic: 'n', blog: 'y', netlify: 'n', adapter: '' }
+          - { keystatic: 'y', blog: 'n', netlify: 'n', adapter: 'node-standalone' }
+          - { keystatic: 'n', blog: 'n', netlify: 'n', adapter: '' }
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: '20', cache: 'npm' }
+      - name: Install jq
+        run: sudo apt-get install -y jq
+      - name: Configure git identity
+        run: |
+          git config --global user.name "CI Bot"
+          git config --global user.email "ci@example.com"
+      - name: Run setup.sh non-interactively
+        run: |
+          ADAPTER_ARG=""
+          if [[ -n "${{ matrix.adapter }}" ]]; then
+            ADAPTER_ARG="--adapter=${{ matrix.adapter }}"
+          fi
+          KS_PROJ=""
+          if [[ "${{ matrix.keystatic }}" == "y" ]]; then
+            KS_PROJ="--keystatic-project=ci-team/ci-test"
+          fi
+          ./setup.sh --non-interactive \
+            --name="CI Test" --slug=ci-test \
+            --site-url=https://ci.example \
+            --author-name="CI" --author-email="ci@example.com" \
+            --keystatic=${{ matrix.keystatic }} $KS_PROJ \
+            --blog=${{ matrix.blog }} \
+            --netlify=${{ matrix.netlify }} $ADAPTER_ARG \
+            --no-install
+      - run: npm install --no-audit --no-fund
+      - run: npm run check
+      - run: npm run build
+      - name: Verify post-setup state
+        run: |
+          ./scripts/verify-setup.sh \
+            --keystatic=${{ matrix.keystatic }} \
+            --blog=${{ matrix.blog }} \
+            --netlify=${{ matrix.netlify }}
