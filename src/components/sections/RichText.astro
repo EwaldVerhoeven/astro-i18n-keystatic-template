@@ -1,0 +1,24 @@
+---
+import type { RichTextProps } from '@/lib/sections/richText';
+import { DocumentRenderer } from '@keystatic/core/renderer';
+const { content, maxWidth = 'default' } = Astro.props as RichTextProps;
+---
+<section class={`rich-text rich-text--${maxWidth}`}>
+  <div class="container">
+    <div class="rich-text__prose">
+      <DocumentRenderer document={content} />
+    </div>
+  </div>
+</section>
+
+<style>
+  .rich-text { padding-block: var(--space-section-y); }
+  .rich-text--narrow .rich-text__prose { max-width: 40rem; margin-inline: auto; }
+  .rich-text__prose :global(h2) { font-size: var(--font-size-2xl); margin-block: var(--space-8) var(--space-3); }
+  .rich-text__prose :global(h3) { font-size: var(--font-size-xl); margin-block: var(--space-6) var(--space-2); }
+  .rich-text__prose :global(p) { margin-block: 0 var(--space-4); }
+  .rich-text__prose :global(a) { color: var(--color-accent); }
+  .rich-text__prose :global(ul), .rich-text__prose :global(ol) { padding-inline-start: var(--space-6); margin-block: 0 var(--space-4); }
+  .rich-text__prose :global(blockquote) { border-inline-start: 3px solid var(--color-accent); padding-inline-start: var(--space-4); margin-inline: 0; color: var(--color-muted); }
+  .rich-text__prose :global(code) { font-family: var(--font-mono); background: var(--color-surface); padding: 0 var(--space-1); border-radius: var(--radius-sm); font-size: 0.9em; }
+</style>

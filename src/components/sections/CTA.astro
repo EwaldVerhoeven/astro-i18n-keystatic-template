@@ -1,0 +1,32 @@
+---
+import type { CtaProps } from '@/lib/sections/cta';
+const { title, description, primaryText, primaryUrl, secondaryText, secondaryUrl, variant = 'default', headingLevel } =
+  Astro.props as CtaProps;
+const Heading = `h${headingLevel}` as 'h1' | 'h2';
+---
+<section class={`cta cta--${variant}`}>
+  <div class="container cta__container">
+    <Heading class="cta__title">{title}</Heading>
+    {description && <p class="cta__description">{description}</p>}
+    <div class="cta__actions">
+      <a class="cta__button cta__button--primary" href={primaryUrl}>{primaryText}</a>
+      {secondaryText && secondaryUrl && (
+        <a class="cta__button cta__button--secondary" href={secondaryUrl}>{secondaryText}</a>
+      )}
+    </div>
+  </div>
+</section>
+
+<style>
+  .cta { padding-block: var(--space-section-y); }
+  .cta--inverted { background: var(--color-fg); color: var(--color-bg); }
+  .cta__container { text-align: center; max-width: 50rem; }
+  .cta__title { font-size: var(--font-size-2xl); margin: 0 0 var(--space-3); }
+  .cta__description { color: var(--color-muted); margin: 0 0 var(--space-6); font-size: var(--font-size-lg); }
+  .cta--inverted .cta__description { color: color-mix(in srgb, var(--color-bg) 70%, transparent); }
+  .cta__actions { display: flex; gap: var(--space-3); justify-content: center; flex-wrap: wrap; }
+  .cta__button { display: inline-block; padding: var(--space-3) var(--space-6); border-radius: var(--radius-md); text-decoration: none; transition: opacity var(--transition-base); }
+  .cta__button--primary { background: var(--color-accent); color: var(--color-accent-fg); }
+  .cta__button--secondary { background: transparent; color: inherit; border: 1px solid currentColor; }
+  .cta__button:hover { opacity: 0.85; }
+</style>
