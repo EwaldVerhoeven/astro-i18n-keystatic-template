@@ -1,0 +1,58 @@
+---
+import type { TestimonialsProps } from '@/lib/sections/testimonials';
+import JsonLd from '@/components/JsonLd.astro';
+
+const { title, items, layout = 'grid', headingLevel } = Astro.props as TestimonialsProps;
+const Heading = `h${headingLevel}` as 'h1' | 'h2';
+
+const reviews = items.map((t) => ({
+  '@type': 'Review',
+  reviewBody: t.quote,
+  author: { '@type': 'Person', name: t.authorName },
+  ...(t.rating ? { reviewRating: { '@type': 'Rating', ratingValue: t.rating, bestRating: 5 } } : {}),
+}));
+const jsonLd =
+  reviews.length > 1
+    ? { '@context': 'https://schema.org', '@graph': reviews }
+    : { '@context': 'https://schema.org', ...reviews[0] };
+---
+<section class={`testimonials testimonials--${layout}`}>
+  <div class="container">
+    {title && <Heading class="testimonials__title">{title}</Heading>}
+    <ul class="testimonials__list">
+      {items.map((item) => (
+        <li class="testimonials__item">
+          <blockquote class="testimonials__quote">"{item.quote}"</blockquote>
+          <footer class="testimonials__author">
+            {item.authorPhoto && (
+              <img class="testimonials__photo" src={item.authorPhoto.src} alt={item.authorPhoto.alt} loading="lazy" decoding="async" width="48" height="48" />
+            )}
+            <div>
+              <div class="testimonials__name">{item.authorName}</div>
+              {(item.authorRole || item.authorOrg) && (
+                <div class="testimonials__meta">
+                  {item.authorRole}{item.authorRole && item.authorOrg ? ', ' : ''}{item.authorOrg}
+                </div>
+              )}
+            </div>
+          </footer>
+        </li>
+      ))}
+    </ul>
+  </div>
+  {items.length > 0 && <JsonLd data={jsonLd} />}
+</section>
+
+<style>
+  .testimonials { padding-block: var(--space-section-y); background: var(--color-surface); }
+  .testimonials__title { font-size: var(--font-size-2xl); margin: 0 0 var(--space-8); text-align: center; }
+  .testimonials__list { list-style: none; padding: 0; margin: 0; display: grid; gap: var(--space-6); }
+  .testimonials--grid .testimonials__list { grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr)); }
+  .testimonials--single .testimonials__list { max-width: 40rem; margin-inline: auto; }
+  .testimonials__item { background: var(--color-bg); padding: var(--space-6); border-radius: var(--radius-lg); border: 1px solid var(--color-border); }
+  .testimonials__quote { font-size: var(--font-size-lg); margin: 0 0 var(--space-4); }
+  .testimonials__author { display: flex; align-items: center; gap: var(--space-3); }
+  .testimonials__photo { width: 3rem; height: 3rem; border-radius: 50%; object-fit: cover; }
+  .testimonials__name { font-weight: 600; }
+  .testimonials__meta { color: var(--color-muted); font-size: var(--font-size-sm); }
+</style>

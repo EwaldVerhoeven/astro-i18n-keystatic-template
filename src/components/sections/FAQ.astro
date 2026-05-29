@@ -1,0 +1,47 @@
+---
+import type { FaqProps } from '@/lib/sections/faq';
+import JsonLd from '@/components/JsonLd.astro';
+
+const { title, items, headingLevel } = Astro.props as FaqProps;
+const Heading = `h${headingLevel}` as 'h1' | 'h2';
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: items.map((item) => ({
+    '@type': 'Question',
+    name: item.question,
+    acceptedAnswer: { '@type': 'Answer', text: item.answer },
+  })),
+};
+---
+<section class="faq">
+  <div class="container">
+    {title && <Heading class="faq__title">{title}</Heading>}
+    <ul class="faq__list">
+      {items.map((item) => (
+        <li class="faq__item">
+          <details>
+            <summary class="faq__question">{item.question}</summary>
+            <div class="faq__answer"><p>{item.answer}</p></div>
+          </details>
+        </li>
+      ))}
+    </ul>
+  </div>
+  {items.length > 0 && <JsonLd data={jsonLd} />}
+</section>
+
+<style>
+  .faq { padding-block: var(--space-section-y); }
+  .faq__title { font-size: var(--font-size-2xl); margin: 0 0 var(--space-8); text-align: center; }
+  .faq__list { list-style: none; padding: 0; margin: 0; max-width: 50rem; margin-inline: auto; }
+  .faq__item { border-bottom: 1px solid var(--color-border); }
+  .faq__item details { padding-block: var(--space-4); }
+  .faq__question { font-weight: 600; cursor: pointer; list-style: none; position: relative; padding-inline-end: var(--space-8); }
+  .faq__question::-webkit-details-marker { display: none; }
+  .faq__question::after { content: '+'; position: absolute; right: 0; top: 0; font-size: 1.5rem; line-height: 1; transition: transform var(--transition-base); }
+  details[open] .faq__question::after { transform: rotate(45deg); }
+  .faq__answer { color: var(--color-muted); padding-top: var(--space-3); }
+  .faq__answer p { margin: 0; }
+</style>

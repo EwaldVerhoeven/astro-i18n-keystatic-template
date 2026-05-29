@@ -1,0 +1,32 @@
+---
+import type { LogoWallProps } from '@/lib/sections/logoWall';
+const { title, logos, grayscale = true, headingLevel } = Astro.props as LogoWallProps;
+const Heading = `h${headingLevel}` as 'h1' | 'h2';
+---
+<section class={`logo-wall ${grayscale ? 'logo-wall--grayscale' : ''}`}>
+  <div class="container">
+    {title && <Heading class="logo-wall__title">{title}</Heading>}
+    <ul class="logo-wall__list">
+      {logos.map((logo) => (
+        <li class="logo-wall__item">
+          {logo.url ? (
+            <a href={logo.url} rel="noopener" target="_blank">
+              <img src={logo.src} alt={logo.alt} loading="lazy" decoding="async" />
+            </a>
+          ) : (
+            <img src={logo.src} alt={logo.alt} loading="lazy" decoding="async" />
+          )}
+        </li>
+      ))}
+    </ul>
+  </div>
+</section>
+
+<style>
+  .logo-wall { padding-block: var(--space-12); background: var(--color-surface); }
+  .logo-wall__title { text-align: center; font-size: var(--font-size-base); color: var(--color-muted); margin: 0 0 var(--space-6); text-transform: uppercase; letter-spacing: 0.05em; }
+  .logo-wall__list { list-style: none; padding: 0; margin: 0; display: flex; flex-wrap: wrap; gap: var(--space-8); justify-content: center; align-items: center; }
+  .logo-wall__item img { max-height: 2.5rem; width: auto; }
+  .logo-wall--grayscale .logo-wall__item img { filter: grayscale(1); opacity: 0.6; transition: filter var(--transition-base), opacity var(--transition-base); }
+  .logo-wall--grayscale .logo-wall__item:hover img { filter: grayscale(0); opacity: 1; }
+</style>

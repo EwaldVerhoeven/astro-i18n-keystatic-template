@@ -7,6 +7,13 @@ import Hero from '@/components/sections/Hero.astro';
 import RichText from '@/components/sections/RichText.astro';
 import FeatureGrid from '@/components/sections/FeatureGrid.astro';
 import CTA from '@/components/sections/CTA.astro';
+import FAQ from '@/components/sections/FAQ.astro';
+import Testimonials from '@/components/sections/Testimonials.astro';
+import BlogPreview from '@/components/sections/BlogPreview.astro';
+import Pricing from '@/components/sections/Pricing.astro';
+import ImageText from '@/components/sections/ImageText.astro';
+import LogoWall from '@/components/sections/LogoWall.astro';
+import ContactForm from '@/components/sections/ContactForm.astro';
 
 interface RegistryEntry {
   label: string;
@@ -17,10 +24,17 @@ interface RegistryEntry {
 }
 
 export const sectionRegistry: Record<string, RegistryEntry> = {
-  hero:        { label: 'Hero',         component: Hero,        schema: null },
-  richText:    { label: 'Rich text',    component: RichText,    schema: null },
-  featureGrid: { label: 'Feature grid', component: FeatureGrid, schema: null },
-  cta:         { label: 'CTA',          component: CTA,         schema: null },
+  hero:         { label: 'Hero',         component: Hero,         schema: null },
+  richText:     { label: 'Rich text',    component: RichText,     schema: null },
+  featureGrid:  { label: 'Feature grid', component: FeatureGrid,  schema: null },
+  cta:          { label: 'CTA',          component: CTA,          schema: null },
+  faq:          { label: 'FAQ',          component: FAQ,          schema: null },
+  testimonials: { label: 'Testimonials', component: Testimonials, schema: null },
+  blogPreview:  { label: 'Blog preview', component: BlogPreview,  schema: null },
+  pricing:      { label: 'Pricing',      component: Pricing,      schema: null },
+  imageText:    { label: 'Image + text', component: ImageText,    schema: null },
+  logoWall:     { label: 'Logo wall',    component: LogoWall,     schema: null },
+  contactForm:  { label: 'Contact form', component: ContactForm,  schema: null },
 };
 
 export type SectionType = keyof typeof sectionRegistry;

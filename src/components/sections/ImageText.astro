@@ -1,0 +1,31 @@
+---
+import type { ImageTextProps } from '@/lib/sections/imageText';
+const { title, body, image, imagePosition = 'right', ctaText, ctaUrl, headingLevel } =
+  Astro.props as ImageTextProps;
+const Heading = `h${headingLevel}` as 'h1' | 'h2';
+---
+<section class={`image-text image-text--image-${imagePosition}`}>
+  <div class="container image-text__container">
+    <div class="image-text__content">
+      <Heading class="image-text__title">{title}</Heading>
+      <p class="image-text__body">{body}</p>
+      {ctaText && ctaUrl && <a class="image-text__cta" href={ctaUrl}>{ctaText} →</a>}
+    </div>
+    <div class="image-text__image-wrap">
+      <img src={image.src} alt={image.alt} loading="lazy" decoding="async" class="image-text__image" />
+    </div>
+  </div>
+</section>
+
+<style>
+  .image-text { padding-block: var(--space-section-y); }
+  .image-text__container { display: grid; gap: var(--space-8); align-items: center; }
+  @media (min-width: 768px) {
+    .image-text__container { grid-template-columns: 1fr 1fr; }
+    .image-text--image-left .image-text__image-wrap { order: -1; }
+  }
+  .image-text__title { font-size: var(--font-size-2xl); margin: 0 0 var(--space-4); }
+  .image-text__body { color: var(--color-muted); margin: 0 0 var(--space-6); font-size: var(--font-size-lg); }
+  .image-text__cta { color: var(--color-accent); text-decoration: none; font-weight: 600; }
+  .image-text__image { border-radius: var(--radius-lg); width: 100%; }
+</style>

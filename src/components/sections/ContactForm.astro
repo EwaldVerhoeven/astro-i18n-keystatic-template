@@ -1,0 +1,57 @@
+---
+import type { ContactFormProps } from '@/lib/sections/contactForm';
+
+const { title, description, submitText, successRedirect, lang, headingLevel } =
+  Astro.props as ContactFormProps;
+const Heading = `h${headingLevel}` as 'h1' | 'h2';
+const action = successRedirect ?? `/${lang}/`;
+---
+<section class="contact-form">
+  <div class="container">
+    {title && <Heading class="contact-form__title">{title}</Heading>}
+    {description && <p class="contact-form__description">{description}</p>}
+    <form
+      name="contact"
+      method="POST"
+      data-netlify="true"
+      netlify-honeypot="bot-field"
+      action={action}
+      class="contact-form__form"
+    >
+      <input type="hidden" name="form-name" value="contact" />
+      <p class="sr-only">
+        <label>Don't fill this out: <input name="bot-field" /></label>
+      </p>
+      <div class="contact-form__field">
+        <label for="contact-name">{lang === 'nl' ? 'Naam' : 'Name'}</label>
+        <input id="contact-name" type="text" name="name" required autocomplete="name" />
+      </div>
+      <div class="contact-form__field">
+        <label for="contact-email">{lang === 'nl' ? 'E-mail' : 'Email'}</label>
+        <input id="contact-email" type="email" name="email" required autocomplete="email" />
+      </div>
+      <div class="contact-form__field">
+        <label for="contact-message">{lang === 'nl' ? 'Bericht' : 'Message'}</label>
+        <textarea id="contact-message" name="message" required rows="5"></textarea>
+      </div>
+      <button type="submit" class="contact-form__submit">{submitText}</button>
+    </form>
+  </div>
+</section>
+
+<style>
+  .contact-form { padding-block: var(--space-section-y); }
+  .contact-form__title { font-size: var(--font-size-2xl); margin: 0 0 var(--space-3); text-align: center; }
+  .contact-form__description { color: var(--color-muted); margin: 0 0 var(--space-8); text-align: center; }
+  .contact-form__form { max-width: 36rem; margin-inline: auto; display: grid; gap: var(--space-4); }
+  .contact-form__field { display: grid; gap: var(--space-2); }
+  .contact-form__field label { font-weight: 600; font-size: var(--font-size-sm); }
+  .contact-form__field input, .contact-form__field textarea {
+    font: inherit; padding: var(--space-3); border: 1px solid var(--color-border); border-radius: var(--radius-md); background: var(--color-bg); color: var(--color-fg);
+  }
+  .contact-form__submit {
+    padding: var(--space-3) var(--space-6); background: var(--color-accent); color: var(--color-accent-fg); border: none; border-radius: var(--radius-md);
+    font: inherit; font-weight: 600; cursor: pointer; transition: opacity var(--transition-base);
+  }
+  .contact-form__submit:hover { opacity: 0.85; }
+</style>
