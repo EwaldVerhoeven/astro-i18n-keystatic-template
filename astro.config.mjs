@@ -1,4 +1,6 @@
 import { defineConfig } from 'astro/config';
+import netlify from '@astrojs/netlify';
+import sitemap from '@astrojs/sitemap';
 
 // The __SITE_URL__ / __DEFAULT_LANG__ placeholders are replaced by setup.sh.
 // Until then, these guards keep `astro check` / `astro build` working on the
@@ -14,6 +16,7 @@ const defaultLocale = LOCALES.includes(DEFAULT_LANG) ? DEFAULT_LANG : 'nl';
 export default defineConfig({
   site,
   output: 'server',
+  adapter: netlify(),
   i18n: {
     defaultLocale,
     locales: LOCALES,
@@ -21,4 +24,12 @@ export default defineConfig({
       prefixDefaultLocale: true,
     },
   },
+  integrations: [
+    sitemap({
+      i18n: {
+        defaultLocale,
+        locales: { nl: 'nl-NL', en: 'en-US' },
+      },
+    }),
+  ],
 });

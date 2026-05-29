@@ -1,0 +1,12 @@
+[build]
+  command = "npm run build"
+  publish = "dist"
+
+[[redirects]]
+  from = "/"
+  to = "/__DEFAULT_LANG__/"
+  status = 302
+  force = false
+
+[functions]
+  node_bundler = "esbuild"
