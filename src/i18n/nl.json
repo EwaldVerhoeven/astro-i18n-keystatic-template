@@ -1,0 +1,10 @@
+{
+  "nav.home": "Home",
+  "nav.blog": "Blog",
+  "nav.skipToContent": "Direct naar inhoud",
+  "footer.copyright": "© __ORG_NAME__",
+  "blog.readMore": "Lees verder",
+  "blog.viewAll": "Alle artikelen",
+  "blog.readTime": "{minutes} min leestijd",
+  "lang.switchTo": "Schakel naar"
+}
