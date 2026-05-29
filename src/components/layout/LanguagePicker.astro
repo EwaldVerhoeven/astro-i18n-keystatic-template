@@ -1,0 +1,42 @@
+---
+import { languages, getAllLangs, type Lang } from '@/i18n/utils';
+
+interface Props {
+  currentLang: Lang;
+}
+
+const { currentLang } = Astro.props;
+const langs = getAllLangs();
+
+// Map current pathname to alternate-language equivalent.
+// Fallback: just /<otherLang>/
+const buildHref = (target: Lang) => {
+  const path = Astro.url.pathname;
+  const parts = path.split('/').filter(Boolean);
+  if (parts[0] && parts[0] in languages) {
+    parts[0] = target;
+    return '/' + parts.join('/') + (path.endsWith('/') && parts.length ? '/' : '');
+  }
+  return `/${target}/`;
+};
+---
+<nav class="lang-picker" aria-label="Language">
+  <ul>
+    {langs.map((l) => (
+      <li>
+        {l === currentLang ? (
+          <span aria-current="true">{languages[l]}</span>
+        ) : (
+          <a href={buildHref(l)} hreflang={l}>{languages[l]}</a>
+        )}
+      </li>
+    ))}
+  </ul>
+</nav>
+
+<style>
+  .lang-picker ul { display: flex; gap: var(--space-3); list-style: none; padding: 0; margin: 0; }
+  .lang-picker a, .lang-picker span { font-size: var(--font-size-sm); text-decoration: none; color: var(--color-muted); }
+  .lang-picker a:hover { color: var(--color-accent); }
+  .lang-picker span[aria-current="true"] { color: var(--color-fg); font-weight: 600; }
+</style>
