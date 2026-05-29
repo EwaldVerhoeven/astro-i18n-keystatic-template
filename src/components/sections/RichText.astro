@@ -1,12 +1,12 @@
 ---
 import type { RichTextProps } from '@/lib/sections/richText';
-import { DocumentRenderer } from '@keystatic/core/renderer';
+import RichTextNode from '@/components/sections/RichTextNode.astro';
 const { content, maxWidth = 'default' } = Astro.props as RichTextProps;
 ---
 <section class={`rich-text rich-text--${maxWidth}`}>
   <div class="container">
     <div class="rich-text__prose">
-      <DocumentRenderer document={content} />
+      {content.map((node) => <RichTextNode node={node} />)}
     </div>
   </div>
 </section>
@@ -21,4 +21,5 @@ const { content, maxWidth = 'default' } = Astro.props as RichTextProps;
   .rich-text__prose :global(ul), .rich-text__prose :global(ol) { padding-inline-start: var(--space-6); margin-block: 0 var(--space-4); }
   .rich-text__prose :global(blockquote) { border-inline-start: 3px solid var(--color-accent); padding-inline-start: var(--space-4); margin-inline: 0; color: var(--color-muted); }
   .rich-text__prose :global(code) { font-family: var(--font-mono); background: var(--color-surface); padding: 0 var(--space-1); border-radius: var(--radius-sm); font-size: 0.9em; }
+  .rich-text__prose :global(pre) { background: var(--color-surface); padding: var(--space-4); border-radius: var(--radius-md); overflow-x: auto; }
 </style>

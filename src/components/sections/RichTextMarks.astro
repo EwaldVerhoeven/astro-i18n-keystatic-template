@@ -1,0 +1,17 @@
+---
+// Recursively wraps slotted text in the given mark tags (outermost first).
+interface Props {
+  tags: string[];
+}
+const { tags } = Astro.props;
+const [first, ...rest] = tags;
+// Runtime value is the real tag name; the cast only satisfies the type checker.
+const Tag = (first ?? 'span') as 'span';
+---
+{
+  first ? (
+    <Tag><Astro.self tags={rest}><slot /></Astro.self></Tag>
+  ) : (
+    <slot />
+  )
+}
