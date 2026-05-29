@@ -1,0 +1,113 @@
+---
+import '@/styles/global.css';
+import JsonLd from '@/components/JsonLd.astro';
+import { useTranslations, type Lang } from '@/i18n/utils';
+import { getCollection } from 'astro:content';
+
+interface SeoProps {
+  title?: string;
+  description: string;
+  ogImage?: string;
+  canonical?: string;
+  noindex?: boolean;
+}
+
+interface Props {
+  lang: Lang;
+  pageTitle: string;
+  seo: SeoProps;
+  translationKey?: string;
+}
+
+const { lang, pageTitle, seo, translationKey } = Astro.props;
+const t = useTranslations(lang);
+
+const globals = await getCollection('globals');
+const site = globals[0]?.data;
+const siteName = site?.siteName ?? 'Site';
+
+const seoTitle = seo.title ?? pageTitle;
+const finalTitle = seoTitle === siteName ? seoTitle : `${seoTitle} — ${siteName}`;
+const canonical =
+  seo.canonical ?? new URL(Astro.url.pathname, Astro.site ?? 'http://localhost').toString();
+const ogImage = seo.ogImage ?? site?.defaultOgImage;
+
+// hreflang: find sibling page entries with same translationKey
+let alternates: { lang: Lang; href: string }[] = [];
+if (translationKey) {
+  const pages = await getCollection('pages');
+  alternates = pages
+    .filter((p) => p.data.translationKey === translationKey)
+    .map((p) => ({
+      lang: p.data.lang,
+      href: new URL(
+        `/${p.data.lang}/${p.data.slug === 'home' ? '' : p.data.slug + '/'}`,
+        Astro.site ?? 'http://localhost'
+      ).toString(),
+    }));
+}
+const xDefault = alternates[0];
+
+const org = site?.organization;
+const orgJsonLd = org
+  ? {
+      '@context': 'https://schema.org',
+      '@type': 'Organization',
+      name: org.name,
+      url: org.url,
+      ...(org.logo ? { logo: org.logo } : {}),
+      ...(org.sameAs.length ? { sameAs: org.sameAs } : {}),
+    }
+  : null;
+
+const isStaging = import.meta.env.SITE_ENV === 'staging';
+const robots = seo.noindex || isStaging ? 'noindex, nofollow' : 'index, follow';
+---
+<!doctype html>
+<html lang={lang}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{finalTitle}</title>
+    <meta name="description" content={seo.description} />
+    <meta name="robots" content={robots} />
+    <link rel="canonical" href={canonical} />
+
+    {/* hreflang */}
+    {alternates.map((alt) => (
+      <link rel="alternate" hreflang={alt.lang} href={alt.href} />
+    ))}
+    {xDefault && <link rel="alternate" hreflang="x-default" href={xDefault.href} />}
+
+    {/* Open Graph */}
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={finalTitle} />
+    <meta property="og:description" content={seo.description} />
+    <meta property="og:url" content={canonical} />
+    {ogImage && <meta property="og:image" content={ogImage} />}
+
+    {/* Twitter */}
+    <meta name="twitter:card" content={ogImage ? 'summary_large_image' : 'summary'} />
+    <meta name="twitter:title" content={finalTitle} />
+    <meta name="twitter:description" content={seo.description} />
+    {ogImage && <meta name="twitter:image" content={ogImage} />}
+
+    {/* Google Site Verification */}
+    {site?.googleSiteVerification && (
+      <meta name="google-site-verification" content={site.googleSiteVerification} />
+    )}
+
+    {/* JSON-LD: Organization */}
+    {orgJsonLd && <JsonLd data={orgJsonLd} />}
+
+    <slot name="head" />
+  </head>
+  <body>
+    <a href="#main" class="skip-link">{t('nav.skipToContent')}</a>
+    <slot name="header" />
+    <main id="main">
+      <slot />
+    </main>
+    <slot name="footer" />
+  </body>
+</html>
