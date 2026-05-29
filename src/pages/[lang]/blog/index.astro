@@ -1,0 +1,59 @@
+---
+export const prerender = true;
+
+import BaseLayout from '@/components/layout/BaseLayout.astro';
+import Nav from '@/components/layout/Nav.astro';
+import Footer from '@/components/layout/Footer.astro';
+import { useTranslations, type Lang, getAllLangs } from '@/i18n/utils';
+import { getCollection } from 'astro:content';
+
+export async function getStaticPaths() {
+  return getAllLangs().map((lang) => ({ params: { lang } }));
+}
+
+const lang = Astro.params.lang as Lang;
+const t = useTranslations(lang);
+
+const posts = (await getCollection('blog', (p) => p.data.lang === lang)).sort(
+  (a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTime()
+);
+
+const pageTitle = 'Blog';
+---
+<BaseLayout
+  lang={lang}
+  pageTitle={pageTitle}
+  seo={{ description: lang === 'nl' ? 'Recente artikelen.' : 'Recent articles.' }}
+>
+  <Nav slot="header" lang={lang} />
+  <section class="container" style="padding-block: var(--space-section-y);">
+    <h1>{pageTitle}</h1>
+    {posts.length === 0 ? (
+      <p style="color: var(--color-muted);">—</p>
+    ) : (
+      <ul style="list-style: none; padding: 0; margin: var(--space-8) 0 0; display: grid; gap: var(--space-6);">
+        {posts.map((post) => {
+          const slug = post.id.replace(/\.md$/, '').split('/').pop();
+          return (
+            <li>
+              <article>
+                <h2 style="font-size: var(--font-size-xl); margin: 0 0 var(--space-2);">
+                  <a href={`/${lang}/blog/${slug}/`} style="color: var(--color-fg); text-decoration: none;">{post.data.title}</a>
+                </h2>
+                <p style="color: var(--color-muted); font-size: var(--font-size-sm); margin: 0 0 var(--space-2);">
+                  <time datetime={post.data.pubDate.toISOString()}>
+                    {post.data.pubDate.toLocaleDateString(lang === 'nl' ? 'nl-NL' : 'en-US', { year: 'numeric', month: 'long', day: 'numeric' })}
+                  </time>
+                  {' · '}
+                  {t('blog.readTime', { minutes: post.data.readTime })}
+                </p>
+                <p>{post.data.description}</p>
+              </article>
+            </li>
+          );
+        })}
+      </ul>
+    )}
+  </section>
+  <Footer slot="footer" lang={lang} />
+</BaseLayout>
