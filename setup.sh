@@ -36,8 +36,8 @@ preflight() {
 
   local node_major
   node_major=$(node -v | sed 's/v\([0-9]*\).*/\1/')
-  if [[ "$node_major" -lt 20 ]]; then
-    err "Node 20+ required (found: $(node -v))"
+  if [[ "$node_major" -lt 22 ]]; then
+    err "Node 22.12+ required by Astro (found: $(node -v))"
   fi
 
   # Detect already-initialized state by absence of __PROJECT_NAME__

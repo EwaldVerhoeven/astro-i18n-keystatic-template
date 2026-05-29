@@ -19,7 +19,7 @@ Klant-/projectsite gebouwd met de `astro-i18n-keystatic-template`.
 ## Quick start
 
 ```bash
-nvm use            # of: node --version (>= 20)
+nvm use            # of: node --version (>= 22.12)
 npm install
 npm run dev
 ```
