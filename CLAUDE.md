@@ -141,5 +141,5 @@ Voor commit/PR:
 - [ ] `npm run build` slaagt
 - [ ] `npm run lint` en `npm run format:check` slagen
 - [ ] Geen achtergebleven placeholder-tokens (`__…__`) in tracked files
-- [ ] Geen `<!-- IF:* -->` of `<!-- ENDIF:* -->` markers (template-only)
+- [ ] Geen achtergebleven IF/ENDIF conditional-markers (template-only)
 - [ ] Voor UI: handmatig in browser geverifieerd
