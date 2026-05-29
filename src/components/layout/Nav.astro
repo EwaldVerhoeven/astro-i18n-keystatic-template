@@ -1,7 +1,7 @@
 ---
 import { useTranslations, type Lang } from '@/i18n/utils';
 import LanguagePicker from './LanguagePicker.astro';
-import { getCollection } from 'astro:content';
+import { site } from '@/lib/site';
 
 interface Props {
   lang: Lang;
@@ -10,8 +10,7 @@ interface Props {
 
 const { lang } = Astro.props;
 const t = useTranslations(lang);
-const globals = await getCollection('globals');
-const siteName = globals[0]?.data.siteName ?? 'Site';
+const siteName = site.siteName;
 ---
 <header class="site-nav">
   <div class="container site-nav__inner">

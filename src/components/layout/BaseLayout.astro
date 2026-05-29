@@ -3,13 +3,14 @@ import '@/styles/global.css';
 import JsonLd from '@/components/JsonLd.astro';
 import { useTranslations, type Lang } from '@/i18n/utils';
 import { getCollection } from 'astro:content';
+import { site } from '@/lib/site';
 
 interface SeoProps {
-  title?: string;
+  title?: string | undefined;
   description: string;
-  ogImage?: string;
-  canonical?: string;
-  noindex?: boolean;
+  ogImage?: string | undefined;
+  canonical?: string | undefined;
+  noindex?: boolean | undefined;
 }
 
 interface Props {
@@ -22,15 +23,13 @@ interface Props {
 const { lang, pageTitle, seo, translationKey } = Astro.props;
 const t = useTranslations(lang);
 
-const globals = await getCollection('globals');
-const site = globals[0]?.data;
-const siteName = site?.siteName ?? 'Site';
+const siteName = site.siteName;
 
 const seoTitle = seo.title ?? pageTitle;
 const finalTitle = seoTitle === siteName ? seoTitle : `${seoTitle} — ${siteName}`;
 const canonical =
   seo.canonical ?? new URL(Astro.url.pathname, Astro.site ?? 'http://localhost').toString();
-const ogImage = seo.ogImage ?? site?.defaultOgImage;
+const ogImage = seo.ogImage ?? site.defaultOgImage;
 
 // hreflang: find sibling page entries with same translationKey
 let alternates: { lang: Lang; href: string }[] = [];
@@ -48,7 +47,7 @@ if (translationKey) {
 }
 const xDefault = alternates[0];
 
-const org = site?.organization;
+const org = site.organization;
 const orgJsonLd = org
   ? {
       '@context': 'https://schema.org',
@@ -93,7 +92,7 @@ const robots = seo.noindex || isStaging ? 'noindex, nofollow' : 'index, follow';
     {ogImage && <meta name="twitter:image" content={ogImage} />}
 
     {/* Google Site Verification */}
-    {site?.googleSiteVerification && (
+    {site.googleSiteVerification && (
       <meta name="google-site-verification" content={site.googleSiteVerification} />
     )}
 

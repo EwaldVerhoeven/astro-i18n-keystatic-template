@@ -1,5 +1,5 @@
 import { defineCollection } from 'astro:content';
-import { glob, file } from 'astro/loaders';
+import { glob } from 'astro/loaders';
 import { z } from 'astro/zod';
 
 const sectionSchema = z.looseObject({
@@ -7,7 +7,13 @@ const sectionSchema = z.looseObject({
 });
 
 const pages = defineCollection({
-  loader: glob({ pattern: '**/*.json', base: 'src/content/pages' }),
+  // generateId forces a path-based id (e.g. "nl/home", "en/home"). Without it,
+  // the loader would use the `slug` field as the id, colliding across languages.
+  loader: glob({
+    pattern: '**/*.json',
+    base: 'src/content/pages',
+    generateId: ({ entry }) => entry.replace(/\.json$/, ''),
+  }),
   schema: z.object({
     title: z.string(),
     slug: z.string(),
@@ -35,23 +41,7 @@ const blog = defineCollection({
   }),
 });
 
-const globals = defineCollection({
-  loader: file('src/content/globals/site.json'),
-  schema: z.object({
-    siteName: z.string(),
-    defaultOgImage: z.string().optional(),
-    organization: z.object({
-      name: z.string(),
-      logo: z.string().optional(),
-      url: z.url(),
-      sameAs: z.array(z.url()).default([]),
-    }).optional(),
-    googleSiteVerification: z.string().optional(),
-    analytics: z.object({
-      provider: z.enum(['plausible', 'ga4', 'fathom', 'umami', 'none']),
-      siteId: z.string().optional(),
-    }).optional(),
-  }),
-});
-
-export const collections = { pages, blog, globals };
+// Site globals (Keystatic singleton) are consumed via a direct, validated JSON
+// import in src/lib/site.ts — see the comment there. The file() content loader
+// does not fit a flat singleton object, so globals is not a collection.
+export const collections = { pages, blog };
