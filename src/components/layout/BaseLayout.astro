@@ -62,6 +62,7 @@ const orgJsonLd = org
 const isStaging = import.meta.env.SITE_ENV === 'staging';
 const robots = seo.noindex || isStaging ? 'noindex, nofollow' : 'index, follow';
 ---
+
 <!doctype html>
 <html lang={lang}>
   <head>
@@ -73,9 +74,7 @@ const robots = seo.noindex || isStaging ? 'noindex, nofollow' : 'index, follow';
     <link rel="canonical" href={canonical} />
 
     {/* hreflang */}
-    {alternates.map((alt) => (
-      <link rel="alternate" hreflang={alt.lang} href={alt.href} />
-    ))}
+    {alternates.map((alt) => <link rel="alternate" hreflang={alt.lang} href={alt.href} />)}
     {xDefault && <link rel="alternate" hreflang="x-default" href={xDefault.href} />}
 
     {/* Open Graph */}
@@ -92,9 +91,11 @@ const robots = seo.noindex || isStaging ? 'noindex, nofollow' : 'index, follow';
     {ogImage && <meta name="twitter:image" content={ogImage} />}
 
     {/* Google Site Verification */}
-    {site.googleSiteVerification && (
-      <meta name="google-site-verification" content={site.googleSiteVerification} />
-    )}
+    {
+      site.googleSiteVerification && (
+        <meta name="google-site-verification" content={site.googleSiteVerification} />
+      )
+    }
 
     {/* JSON-LD: Organization */}
     {orgJsonLd && <JsonLd data={orgJsonLd} />}

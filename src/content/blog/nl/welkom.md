@@ -1,6 +1,6 @@
 ---
-title: "Welkom bij de blog"
-description: "Een eerste voorbeeld-artikel om de blog-routes en BlogPreview-sectie te demonstreren."
+title: 'Welkom bij de blog'
+description: 'Een eerste voorbeeld-artikel om de blog-routes en BlogPreview-sectie te demonstreren.'
 pubDate: 2026-01-15
 readTime: 2
 lang: nl

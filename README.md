@@ -1,4 +1,4 @@
-# __PROJECT_NAME__
+# **PROJECT_NAME**
 
 Klant-/projectsite gebouwd met de `astro-i18n-keystatic-template`.
 
@@ -11,8 +11,8 @@ Klant-/projectsite gebouwd met de `astro-i18n-keystatic-template`.
 - 11 herbruikbare secties; pagina's = sectielijsten in JSON
 <!-- IF:KEYSTATIC -->
 - [Keystatic Cloud](https://keystatic.cloud) als CMS — `__KEYSTATIC_PROJECT__`
-<!-- ENDIF:KEYSTATIC -->
-<!-- IF:NETLIFY -->
+  <!-- ENDIF:KEYSTATIC -->
+  <!-- IF:NETLIFY -->
 - Deploy: [Netlify](https://netlify.com) (auto-deploy bij push naar `main`)
 <!-- ENDIF:NETLIFY -->
 
@@ -27,19 +27,21 @@ npm run dev
 Open <http://localhost:4321> — wordt geredirect naar `/__DEFAULT_LANG__/`.
 
 <!-- IF:KEYSTATIC -->
+
 Admin: <http://localhost:4321/keystatic> (vereist "Allow local development" in je Keystatic Cloud project-instellingen).
+
 <!-- ENDIF:KEYSTATIC -->
 
 ## Scripts
 
-| Command | Doel |
-|---|---|
-| `npm run dev` | Start dev-server (Astro + Keystatic admin) |
-| `npm run build` | Productiebuild naar `dist/` |
-| `npm run preview` | Preview van de productiebuild |
-| `npm run check` | TypeScript + Astro type-check |
-| `npm run lint` | ESLint over het project |
-| `npm run format` | Prettier-formattering toepassen |
+| Command           | Doel                                       |
+| ----------------- | ------------------------------------------ |
+| `npm run dev`     | Start dev-server (Astro + Keystatic admin) |
+| `npm run build`   | Productiebuild naar `dist/`                |
+| `npm run preview` | Preview van de productiebuild              |
+| `npm run check`   | TypeScript + Astro type-check              |
+| `npm run lint`    | ESLint over het project                    |
+| `npm run format`  | Prettier-formattering toepassen            |
 
 ## Projectstructuur
 
@@ -65,7 +67,9 @@ src/
 ## Een nieuwe pagina toevoegen
 
 <!-- IF:KEYSTATIC -->
+
 **Via Keystatic admin (aanbevolen voor klanten):**
+
 1. Open `/keystatic` in je browser
 2. Klik op "Pages (NL)" → "Add Page"
 3. Vul titel, slug, SEO-velden en translationKey in
@@ -74,6 +78,7 @@ src/
 <!-- ENDIF:KEYSTATIC -->
 
 **Via git (developer-workflow):**
+
 1. Kopieer `src/content/pages/__DEFAULT_LANG__/home.json` naar bv. `over-ons.json`
 2. Pas `slug`, `title`, `translationKey` en `sections` aan
 3. Doe hetzelfde voor andere talen met dezelfde `translationKey`
@@ -85,14 +90,15 @@ URL wordt automatisch `/<lang>/<slug>/`.
 Zie [CLAUDE.md](CLAUDE.md) sectie "Nieuwe sectie toevoegen" voor de exacte stappen (schema → component → registry-entry).
 
 <!-- IF:BLOG -->
+
 ## Blog
 
 Posts staan als markdown in `src/content/blog/<lang>/`. Frontmatter-velden:
 
 ```yaml
 ---
-title: "Titel"
-description: "Korte omschrijving (verschijnt in lijsten en meta-description)"
+title: 'Titel'
+description: 'Korte omschrijving (verschijnt in lijsten en meta-description)'
 pubDate: 2026-01-15
 readTime: 5
 lang: nl
@@ -100,6 +106,7 @@ lang: nl
 ```
 
 URL volgt de bestandsnaam: `mijn-post.md` → `/nl/blog/mijn-post/`.
+
 <!-- ENDIF:BLOG -->
 
 ## SEO
@@ -116,6 +123,7 @@ URL volgt de bestandsnaam: `mijn-post.md` → `/nl/blog/mijn-post/`.
 Nog niet meegeleverd in v1 — zie [CLAUDE.md](CLAUDE.md) sectie "Bekende v1-gaps" voor toelichting en implementatie-aanpak.
 
 <!-- IF:NETLIFY -->
+
 ## Deploy
 
 Auto-deploy via Netlify bij push naar `main`.
@@ -123,18 +131,22 @@ Auto-deploy via Netlify bij push naar `main`.
 > ⚠ **Let op:** elke push naar `main` triggert een Netlify build die credits kost (build minutes, bandwidth, function invocations). Bouw lokaal eerst (`npm run build`), push bewust.
 
 Configuratie:
+
 - `netlify.toml` regelt build command + redirect van `/` → `/__DEFAULT_LANG__/`
 - `@astrojs/netlify` adapter draait Keystatic admin als serverless function
 - Contact form via Netlify Forms (zie ContactForm-sectie)
 <!-- ENDIF:NETLIFY -->
 
 <!-- IF:!NETLIFY -->
+
 ## Deploy
 
 > **TODO:** Deze template is geconfigureerd zonder Netlify. Configureer je hosting provider:
+>
 > - Voor Vercel: `npm install @astrojs/vercel` + update `astro.config.mjs`
 > - Voor zelf-hosting (Node): `@astrojs/node` met `mode: 'standalone'`
 > - Voor pure static: `output: 'static'` (alleen zonder Keystatic admin)
+
 <!-- ENDIF:!NETLIFY -->
 
 ## Licentie

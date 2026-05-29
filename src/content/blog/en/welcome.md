@@ -1,6 +1,6 @@
 ---
-title: "Welcome to the blog"
-description: "A first sample article to demonstrate the blog routes and BlogPreview section."
+title: 'Welcome to the blog'
+description: 'A first sample article to demonstrate the blog routes and BlogPreview section.'
 pubDate: 2026-01-15
 readTime: 2
 lang: en

@@ -21,14 +21,17 @@ const processed = sections.map((s) => {
   return { ...s, headingLevel };
 });
 ---
-{processed.map((section) => {
-  const entry = sectionRegistry[section._type];
-  if (!entry) {
-    if (import.meta.env.DEV) {
-      console.warn(`[SectionRenderer] Unknown section type: ${section._type}`);
+
+{
+  processed.map((section) => {
+    const entry = sectionRegistry[section._type];
+    if (!entry) {
+      if (import.meta.env.DEV) {
+        console.warn(`[SectionRenderer] Unknown section type: ${section._type}`);
+      }
+      return null;
     }
-    return null;
-  }
-  const Component = entry.component;
-  return <Component {...section} lang={lang} />;
-})}
+    const Component = entry.component;
+    return <Component {...section} lang={lang} />;
+  })
+}

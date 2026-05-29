@@ -1,4 +1,4 @@
-# CLAUDE.md — __PROJECT_NAME__
+# CLAUDE.md — **PROJECT_NAME**
 
 Project gegenereerd uit [`EwaldVerhoeven/astro-i18n-keystatic-template`](https://github.com/EwaldVerhoeven/astro-i18n-keystatic-template).
 Dit bestand is voor AI-coding agents (Claude Code en vergelijkbaar). Mens-georiënteerde uitleg staat in [README.md](README.md).
@@ -12,8 +12,8 @@ Dit bestand is voor AI-coding agents (Claude Code en vergelijkbaar). Mens-geori�
 - Content collections in `src/content/`
 <!-- IF:KEYSTATIC -->
 - Keystatic Cloud CMS, project: `__KEYSTATIC_PROJECT__`
-<!-- ENDIF:KEYSTATIC -->
-<!-- IF:NETLIFY -->
+  <!-- ENDIF:KEYSTATIC -->
+  <!-- IF:NETLIFY -->
 - Hosting: Netlify (auto-deploy bij push naar `main`)
 <!-- ENDIF:NETLIFY -->
 
@@ -43,7 +43,9 @@ Site-globals (`src/content/globals/site.json`) worden gelezen via een gevalideer
 Astro's `file()` content-loader.
 
 <!-- IF:KEYSTATIC -->
+
 Keystatic-admin bewerkt diezelfde JSON-bestanden. Cloud committeert wijzigingen naar de repo via een GitHub App.
+
 <!-- ENDIF:KEYSTATIC -->
 
 ## Nieuwe sectie toevoegen
@@ -84,23 +86,27 @@ const t = useTranslations(lang);
 ```
 
 Een taal toevoegen:
+
 1. Voeg `xx.json` toe in `src/i18n/`
 2. Update `languages` object in `src/i18n/utils.ts`
 3. Update `i18n.locales` (de `LOCALES`-const) in `astro.config.mjs`
 4. Voeg een Keystatic collection toe voor pages in die taal (zie pattern van pagesNL/pagesEN)
 
 <!-- IF:NETLIFY -->
+
 ## Netlify deployment guardrail
 
 **Push naar `main` triggert een Netlify-build die credits kost.** Build minutes, bandwidth en function invocations tellen mee in het Netlify-quotum.
 
 Regels:
+
 1. Werk lokaal met `npm run dev`
 2. Bouw lokaal eerst (`npm run build`) om te valideren
 3. Push of merge **nooit** naar `main` zonder expliciete toestemming van de gebruiker
 4. Bij twijfel: vraag eerst
 
 Deze guardrail geldt ook voor toegevoegde branches die naar `main` mergen via PR.
+
 <!-- ENDIF:NETLIFY -->
 
 ## SEO-velden (afgedwongen)
@@ -114,11 +120,13 @@ Elk page-entry **moet** een `seo.description` van minstens 50 karakters bevatten
 ### Analytics (niet meegeleverd)
 
 Bij eerste sessie in dit project, stel de gebruiker ongevraagd deze vragen:
+
 - Wil je analytics op deze site? (default: ja, voor klantsites bijna altijd)
 - Welke tool? (Plausible / GA4 / Fathom / Umami / geen)
 - Cookie-consent vereist? (NL/EU: ja voor GA4, nee voor Plausible/Fathom)
 
 Implementatie:
+
 1. Maak `src/components/Analytics.astro` die alleen in `import.meta.env.PROD` rendert
 2. Laad component in `BaseLayout` head-slot
 3. Sla config op in `src/content/globals/site.json` (analytics-provider + site-id, schema is al voorzien)
@@ -137,6 +145,7 @@ Implementatie:
 ## Pre-PR checklist (intern)
 
 Voor commit/PR:
+
 - [ ] `npm run check` slaagt
 - [ ] `npm run build` slaagt
 - [ ] `npm run lint` en `npm run format:check` slagen

@@ -32,29 +32,60 @@ if (leaf) {
 }
 
 // Runtime value is the real tag; the cast only satisfies the type checker.
-const HeadingTag = (el && el.type === 'heading'
-  ? `h${Math.min(Math.max(el.level ?? 2, 1), 6)}`
-  : 'h2') as 'h2';
+const HeadingTag = (
+  el && el.type === 'heading' ? `h${Math.min(Math.max(el.level ?? 2, 1), 6)}` : 'h2'
+) as 'h2';
 const GenericTag = (el ? (GENERIC_TAGS[el.type] ?? 'div') : 'div') as 'div';
 const alignStyle = el?.textAlign ? `text-align:${el.textAlign}` : undefined;
 const href = el?.href ?? '#';
 ---
-{kind === 'leaf' && leaf && (
-  <RichTextMarks tags={markTagsFor(leaf)}>{leaf.text}</RichTextMarks>
-)}
-{kind === 'heading' && el && (
-  <HeadingTag style={alignStyle}>{el.children.map((c) => <Astro.self node={c} />)}</HeadingTag>
-)}
-{kind === 'generic' && el && (
-  <GenericTag style={alignStyle}>{el.children.map((c) => <Astro.self node={c} />)}</GenericTag>
-)}
-{kind === 'link' && el && (
-  <a href={href}>{el.children.map((c) => <Astro.self node={c} />)}</a>
-)}
-{kind === 'code' && el && (
-  <pre><code>{el.children.map((c) => <Astro.self node={c} />)}</code></pre>
-)}
+
+{kind === 'leaf' && leaf && <RichTextMarks tags={markTagsFor(leaf)}>{leaf.text}</RichTextMarks>}
+{
+  kind === 'heading' && el && (
+    <HeadingTag style={alignStyle}>
+      {el.children.map((c) => (
+        <Astro.self node={c} />
+      ))}
+    </HeadingTag>
+  )
+}
+{
+  kind === 'generic' && el && (
+    <GenericTag style={alignStyle}>
+      {el.children.map((c) => (
+        <Astro.self node={c} />
+      ))}
+    </GenericTag>
+  )
+}
+{
+  kind === 'link' && el && (
+    <a href={href}>
+      {el.children.map((c) => (
+        <Astro.self node={c} />
+      ))}
+    </a>
+  )
+}
+{
+  kind === 'code' && el && (
+    <pre>
+      <code>
+        {el.children.map((c) => (
+          <Astro.self node={c} />
+        ))}
+      </code>
+    </pre>
+  )
+}
 {kind === 'divider' && <hr />}
-{kind === 'fragment' && el && (
-  <Fragment>{el.children.map((c) => <Astro.self node={c} />)}</Fragment>
-)}
+{
+  kind === 'fragment' && el && (
+    <Fragment>
+      {el.children.map((c) => (
+        <Astro.self node={c} />
+      ))}
+    </Fragment>
+  )
+}

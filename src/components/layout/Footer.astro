@@ -1,11 +1,14 @@
 ---
 import { useTranslations, type Lang } from '@/i18n/utils';
 
-interface Props { lang: Lang }
+interface Props {
+  lang: Lang;
+}
 const { lang } = Astro.props;
 const t = useTranslations(lang);
 const year = new Date().getFullYear();
 ---
+
 <footer class="site-footer">
   <div class="container site-footer__inner">
     <p>{t('footer.copyright')} {year}</p>
@@ -13,6 +16,16 @@ const year = new Date().getFullYear();
 </footer>
 
 <style>
-  .site-footer { border-top: 1px solid var(--color-border); padding-block: var(--space-8); margin-top: var(--space-16); color: var(--color-muted); font-size: var(--font-size-sm); }
-  .site-footer__inner { display: flex; justify-content: space-between; align-items: center; }
+  .site-footer {
+    border-top: 1px solid var(--color-border);
+    padding-block: var(--space-8);
+    margin-top: var(--space-16);
+    color: var(--color-muted);
+    font-size: var(--font-size-sm);
+  }
+  .site-footer__inner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
 </style>

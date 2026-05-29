@@ -12,32 +12,41 @@ const posts = allPosts
   .sort((a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTime())
   .slice(0, limit);
 ---
+
 <section class="blog-preview">
   <div class="container">
     {title && <Heading class="blog-preview__title">{title}</Heading>}
-    {posts.length === 0 ? (
-      <p class="blog-preview__empty">—</p>
-    ) : (
-      <ul class="blog-preview__list">
-        {posts.map((post) => (
-          <li class="blog-preview__item">
-            <article>
-              <h3 class="blog-preview__post-title">
-                <a href={`/${lang}/blog/${post.id.replace(/\.md$/, '').split('/').pop()}/`}>{post.data.title}</a>
-              </h3>
-              <p class="blog-preview__meta">
-                <time datetime={post.data.pubDate.toISOString()}>
-                  {post.data.pubDate.toLocaleDateString(lang === 'nl' ? 'nl-NL' : 'en-US', { year: 'numeric', month: 'long', day: 'numeric' })}
-                </time>
-                {' · '}
-                {t('blog.readTime', { minutes: post.data.readTime })}
-              </p>
-              <p class="blog-preview__description">{post.data.description}</p>
-            </article>
-          </li>
-        ))}
-      </ul>
-    )}
+    {
+      posts.length === 0 ? (
+        <p class="blog-preview__empty">—</p>
+      ) : (
+        <ul class="blog-preview__list">
+          {posts.map((post) => (
+            <li class="blog-preview__item">
+              <article>
+                <h3 class="blog-preview__post-title">
+                  <a href={`/${lang}/blog/${post.id.replace(/\.md$/, '').split('/').pop()}/`}>
+                    {post.data.title}
+                  </a>
+                </h3>
+                <p class="blog-preview__meta">
+                  <time datetime={post.data.pubDate.toISOString()}>
+                    {post.data.pubDate.toLocaleDateString(lang === 'nl' ? 'nl-NL' : 'en-US', {
+                      year: 'numeric',
+                      month: 'long',
+                      day: 'numeric',
+                    })}
+                  </time>
+                  {' · '}
+                  {t('blog.readTime', { minutes: post.data.readTime })}
+                </p>
+                <p class="blog-preview__description">{post.data.description}</p>
+              </article>
+            </li>
+          ))}
+        </ul>
+      )
+    }
     <p class="blog-preview__view-all">
       <a href={`/${lang}/blog/`}>{t('blog.viewAll')} →</a>
     </p>
@@ -45,15 +54,52 @@ const posts = allPosts
 </section>
 
 <style>
-  .blog-preview { padding-block: var(--space-section-y); }
-  .blog-preview__title { font-size: var(--font-size-2xl); margin: 0 0 var(--space-8); text-align: center; }
-  .blog-preview__empty { text-align: center; color: var(--color-muted); }
-  .blog-preview__list { list-style: none; padding: 0; margin: 0 0 var(--space-6); display: grid; gap: var(--space-6); grid-template-columns: repeat(auto-fit, minmax(18rem, 1fr)); }
-  .blog-preview__post-title { font-size: var(--font-size-lg); margin: 0 0 var(--space-2); }
-  .blog-preview__post-title a { color: var(--color-fg); text-decoration: none; }
-  .blog-preview__post-title a:hover { color: var(--color-accent); }
-  .blog-preview__meta { font-size: var(--font-size-sm); color: var(--color-muted); margin: 0 0 var(--space-2); }
-  .blog-preview__description { color: var(--color-muted); margin: 0; }
-  .blog-preview__view-all { text-align: center; }
-  .blog-preview__view-all a { color: var(--color-accent); text-decoration: none; font-weight: 600; }
+  .blog-preview {
+    padding-block: var(--space-section-y);
+  }
+  .blog-preview__title {
+    font-size: var(--font-size-2xl);
+    margin: 0 0 var(--space-8);
+    text-align: center;
+  }
+  .blog-preview__empty {
+    text-align: center;
+    color: var(--color-muted);
+  }
+  .blog-preview__list {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 var(--space-6);
+    display: grid;
+    gap: var(--space-6);
+    grid-template-columns: repeat(auto-fit, minmax(18rem, 1fr));
+  }
+  .blog-preview__post-title {
+    font-size: var(--font-size-lg);
+    margin: 0 0 var(--space-2);
+  }
+  .blog-preview__post-title a {
+    color: var(--color-fg);
+    text-decoration: none;
+  }
+  .blog-preview__post-title a:hover {
+    color: var(--color-accent);
+  }
+  .blog-preview__meta {
+    font-size: var(--font-size-sm);
+    color: var(--color-muted);
+    margin: 0 0 var(--space-2);
+  }
+  .blog-preview__description {
+    color: var(--color-muted);
+    margin: 0;
+  }
+  .blog-preview__view-all {
+    text-align: center;
+  }
+  .blog-preview__view-all a {
+    color: var(--color-accent);
+    text-decoration: none;
+    font-weight: 600;
+  }
 </style>

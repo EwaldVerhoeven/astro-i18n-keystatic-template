@@ -20,23 +20,44 @@ const buildHref = (target: Lang) => {
   return `/${target}/`;
 };
 ---
+
 <nav class="lang-picker" aria-label="Language">
   <ul>
-    {langs.map((l) => (
-      <li>
-        {l === currentLang ? (
-          <span aria-current="true">{languages[l]}</span>
-        ) : (
-          <a href={buildHref(l)} hreflang={l}>{languages[l]}</a>
-        )}
-      </li>
-    ))}
+    {
+      langs.map((l) => (
+        <li>
+          {l === currentLang ? (
+            <span aria-current="true">{languages[l]}</span>
+          ) : (
+            <a href={buildHref(l)} hreflang={l}>
+              {languages[l]}
+            </a>
+          )}
+        </li>
+      ))
+    }
   </ul>
 </nav>
 
 <style>
-  .lang-picker ul { display: flex; gap: var(--space-3); list-style: none; padding: 0; margin: 0; }
-  .lang-picker a, .lang-picker span { font-size: var(--font-size-sm); text-decoration: none; color: var(--color-muted); }
-  .lang-picker a:hover { color: var(--color-accent); }
-  .lang-picker span[aria-current="true"] { color: var(--color-fg); font-weight: 600; }
+  .lang-picker ul {
+    display: flex;
+    gap: var(--space-3);
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  .lang-picker a,
+  .lang-picker span {
+    font-size: var(--font-size-sm);
+    text-decoration: none;
+    color: var(--color-muted);
+  }
+  .lang-picker a:hover {
+    color: var(--color-accent);
+  }
+  .lang-picker span[aria-current='true'] {
+    color: var(--color-fg);
+    font-weight: 600;
+  }
 </style>

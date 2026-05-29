@@ -54,14 +54,22 @@ const featureGridBlock = fields.object({
   title: fields.text({ label: 'Title' }),
   columns: fields.select({
     label: 'Columns',
-    options: [{ label: '2', value: '2' }, { label: '3', value: '3' }, { label: '4', value: '4' }],
+    options: [
+      { label: '2', value: '2' },
+      { label: '3', value: '3' },
+      { label: '4', value: '4' },
+    ],
     defaultValue: '3',
   }),
   features: fields.array(
     fields.object({
       title: fields.text({ label: 'Title' }),
       description: fields.text({ label: 'Description', multiline: true }),
-      icon: fields.image({ label: 'Icon', directory: 'public/sections/icons', publicPath: '/sections/icons/' }),
+      icon: fields.image({
+        label: 'Icon',
+        directory: 'public/sections/icons',
+        publicPath: '/sections/icons/',
+      }),
     }),
     { label: 'Features', itemLabel: (props) => props.fields.title.value || 'Feature' }
   ),
@@ -76,7 +84,10 @@ const ctaBlock = fields.object({
   secondaryUrl: fields.text({ label: 'Secondary button URL' }),
   variant: fields.select({
     label: 'Variant',
-    options: [{ label: 'Default', value: 'default' }, { label: 'Inverted', value: 'inverted' }],
+    options: [
+      { label: 'Default', value: 'default' },
+      { label: 'Inverted', value: 'inverted' },
+    ],
     defaultValue: 'default',
   }),
 });
@@ -96,7 +107,10 @@ const testimonialsBlock = fields.object({
   title: fields.text({ label: 'Title' }),
   layout: fields.select({
     label: 'Layout',
-    options: [{ label: 'Grid', value: 'grid' }, { label: 'Single', value: 'single' }],
+    options: [
+      { label: 'Grid', value: 'grid' },
+      { label: 'Single', value: 'single' },
+    ],
     defaultValue: 'grid',
   }),
   items: fields.array(
@@ -106,15 +120,22 @@ const testimonialsBlock = fields.object({
       authorRole: fields.text({ label: 'Author role' }),
       authorOrg: fields.text({ label: 'Organization' }),
       authorPhoto: fields.object({
-        src: fields.image({ label: 'Photo', directory: 'public/testimonials', publicPath: '/testimonials/' }),
+        src: fields.image({
+          label: 'Photo',
+          directory: 'public/testimonials',
+          publicPath: '/testimonials/',
+        }),
         alt: fields.text({ label: 'Alt text' }),
       }),
       rating: fields.select({
         label: 'Rating',
         options: [
           { label: 'None', value: '' },
-          { label: '1', value: '1' }, { label: '2', value: '2' },
-          { label: '3', value: '3' }, { label: '4', value: '4' }, { label: '5', value: '5' },
+          { label: '1', value: '1' },
+          { label: '2', value: '2' },
+          { label: '3', value: '3' },
+          { label: '4', value: '4' },
+          { label: '5', value: '5' },
         ],
         defaultValue: '',
       }),
@@ -164,7 +185,10 @@ const imageTextBlock = fields.object({
   }),
   imagePosition: fields.select({
     label: 'Image position',
-    options: [{ label: 'Left', value: 'left' }, { label: 'Right', value: 'right' }],
+    options: [
+      { label: 'Left', value: 'left' },
+      { label: 'Right', value: 'right' },
+    ],
     defaultValue: 'right',
   }),
   ctaText: fields.text({ label: 'CTA text' }),
@@ -201,7 +225,11 @@ export default config({
       format: { data: 'json' },
       schema: {
         siteName: fields.text({ label: 'Site name' }),
-        defaultOgImage: fields.image({ label: 'Default OG image', directory: 'public/og', publicPath: '/og/' }),
+        defaultOgImage: fields.image({
+          label: 'Default OG image',
+          directory: 'public/og',
+          publicPath: '/og/',
+        }),
         organization: fields.object({
           name: fields.text({ label: 'Organization name' }),
           logo: fields.image({ label: 'Logo', directory: 'public', publicPath: '/' }),
@@ -237,7 +265,10 @@ export default config({
         slug: fields.slug({ name: { label: 'Slug' } }),
         lang: fields.select({
           label: 'Language',
-          options: [{ label: 'NL', value: 'nl' }, { label: 'EN', value: 'en' }],
+          options: [
+            { label: 'NL', value: 'nl' },
+            { label: 'EN', value: 'en' },
+          ],
           defaultValue: 'nl',
         }),
         translationKey: fields.text({
@@ -247,17 +278,17 @@ export default config({
         seo: seoField,
         sections: fields.blocks(
           {
-            hero:         { label: 'Hero',         schema: heroBlock },
-            richText:     { label: 'Rich text',    schema: richTextBlock },
-            featureGrid:  { label: 'Feature grid', schema: featureGridBlock },
-            cta:          { label: 'CTA',          schema: ctaBlock },
-            faq:          { label: 'FAQ',          schema: faqBlock },
+            hero: { label: 'Hero', schema: heroBlock },
+            richText: { label: 'Rich text', schema: richTextBlock },
+            featureGrid: { label: 'Feature grid', schema: featureGridBlock },
+            cta: { label: 'CTA', schema: ctaBlock },
+            faq: { label: 'FAQ', schema: faqBlock },
             testimonials: { label: 'Testimonials', schema: testimonialsBlock },
-            blogPreview:  { label: 'Blog preview', schema: blogPreviewBlock },
-            pricing:      { label: 'Pricing',      schema: pricingBlock },
-            imageText:    { label: 'Image + text', schema: imageTextBlock },
-            logoWall:     { label: 'Logo wall',    schema: logoWallBlock },
-            contactForm:  { label: 'Contact form', schema: contactFormBlock },
+            blogPreview: { label: 'Blog preview', schema: blogPreviewBlock },
+            pricing: { label: 'Pricing', schema: pricingBlock },
+            imageText: { label: 'Image + text', schema: imageTextBlock },
+            logoWall: { label: 'Logo wall', schema: logoWallBlock },
+            contactForm: { label: 'Contact form', schema: contactFormBlock },
           },
           { label: 'Sections' }
         ),
@@ -273,24 +304,27 @@ export default config({
         slug: fields.slug({ name: { label: 'Slug' } }),
         lang: fields.select({
           label: 'Language',
-          options: [{ label: 'NL', value: 'nl' }, { label: 'EN', value: 'en' }],
+          options: [
+            { label: 'NL', value: 'nl' },
+            { label: 'EN', value: 'en' },
+          ],
           defaultValue: 'en',
         }),
         translationKey: fields.text({ label: 'Translation key' }),
         seo: seoField,
         sections: fields.blocks(
           {
-            hero:         { label: 'Hero',         schema: heroBlock },
-            richText:     { label: 'Rich text',    schema: richTextBlock },
-            featureGrid:  { label: 'Feature grid', schema: featureGridBlock },
-            cta:          { label: 'CTA',          schema: ctaBlock },
-            faq:          { label: 'FAQ',          schema: faqBlock },
+            hero: { label: 'Hero', schema: heroBlock },
+            richText: { label: 'Rich text', schema: richTextBlock },
+            featureGrid: { label: 'Feature grid', schema: featureGridBlock },
+            cta: { label: 'CTA', schema: ctaBlock },
+            faq: { label: 'FAQ', schema: faqBlock },
             testimonials: { label: 'Testimonials', schema: testimonialsBlock },
-            blogPreview:  { label: 'Blog preview', schema: blogPreviewBlock },
-            pricing:      { label: 'Pricing',      schema: pricingBlock },
-            imageText:    { label: 'Image + text', schema: imageTextBlock },
-            logoWall:     { label: 'Logo wall',    schema: logoWallBlock },
-            contactForm:  { label: 'Contact form', schema: contactFormBlock },
+            blogPreview: { label: 'Blog preview', schema: blogPreviewBlock },
+            pricing: { label: 'Pricing', schema: pricingBlock },
+            imageText: { label: 'Image + text', schema: imageTextBlock },
+            logoWall: { label: 'Logo wall', schema: logoWallBlock },
+            contactForm: { label: 'Contact form', schema: contactFormBlock },
           },
           { label: 'Sections' }
         ),

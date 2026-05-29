@@ -3,36 +3,80 @@ import type { FeatureGridProps } from '@/lib/sections/featureGrid';
 const { eyebrow, title, columns = 3, features, headingLevel } = Astro.props as FeatureGridProps;
 const Heading = `h${headingLevel}` as 'h1' | 'h2';
 ---
+
 <section class="feature-grid">
   <div class="container">
-    {(eyebrow || title) && (
-      <header class="feature-grid__header">
-        {eyebrow && <p class="feature-grid__eyebrow">{eyebrow}</p>}
-        {title && <Heading class="feature-grid__title">{title}</Heading>}
-      </header>
-    )}
+    {
+      (eyebrow || title) && (
+        <header class="feature-grid__header">
+          {eyebrow && <p class="feature-grid__eyebrow">{eyebrow}</p>}
+          {title && <Heading class="feature-grid__title">{title}</Heading>}
+        </header>
+      )
+    }
     <ul class={`feature-grid__list feature-grid__list--cols-${columns}`}>
-      {features.map((feature) => (
-        <li class="feature-grid__item">
-          {feature.icon && <img class="feature-grid__icon" src={feature.icon} alt="" loading="lazy" />}
-          <h3 class="feature-grid__item-title">{feature.title}</h3>
-          <p class="feature-grid__item-description">{feature.description}</p>
-        </li>
-      ))}
+      {
+        features.map((feature) => (
+          <li class="feature-grid__item">
+            {feature.icon && (
+              <img class="feature-grid__icon" src={feature.icon} alt="" loading="lazy" />
+            )}
+            <h3 class="feature-grid__item-title">{feature.title}</h3>
+            <p class="feature-grid__item-description">{feature.description}</p>
+          </li>
+        ))
+      }
     </ul>
   </div>
 </section>
 
 <style>
-  .feature-grid { padding-block: var(--space-section-y); }
-  .feature-grid__header { text-align: center; margin-bottom: var(--space-12); }
-  .feature-grid__eyebrow { color: var(--color-accent); font-size: var(--font-size-sm); font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; margin: 0 0 var(--space-2); }
-  .feature-grid__title { font-size: var(--font-size-2xl); margin: 0; }
-  .feature-grid__list { list-style: none; padding: 0; margin: 0; display: grid; gap: var(--space-8); }
-  .feature-grid__list--cols-2 { grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr)); }
-  .feature-grid__list--cols-3 { grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr)); }
-  .feature-grid__list--cols-4 { grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr)); }
-  .feature-grid__icon { width: 2.5rem; height: 2.5rem; margin-bottom: var(--space-3); }
-  .feature-grid__item-title { font-size: var(--font-size-lg); margin: 0 0 var(--space-2); }
-  .feature-grid__item-description { color: var(--color-muted); margin: 0; }
+  .feature-grid {
+    padding-block: var(--space-section-y);
+  }
+  .feature-grid__header {
+    text-align: center;
+    margin-bottom: var(--space-12);
+  }
+  .feature-grid__eyebrow {
+    color: var(--color-accent);
+    font-size: var(--font-size-sm);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin: 0 0 var(--space-2);
+  }
+  .feature-grid__title {
+    font-size: var(--font-size-2xl);
+    margin: 0;
+  }
+  .feature-grid__list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    gap: var(--space-8);
+  }
+  .feature-grid__list--cols-2 {
+    grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr));
+  }
+  .feature-grid__list--cols-3 {
+    grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
+  }
+  .feature-grid__list--cols-4 {
+    grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
+  }
+  .feature-grid__icon {
+    width: 2.5rem;
+    height: 2.5rem;
+    margin-bottom: var(--space-3);
+  }
+  .feature-grid__item-title {
+    font-size: var(--font-size-lg);
+    margin: 0 0 var(--space-2);
+  }
+  .feature-grid__item-description {
+    color: var(--color-muted);
+    margin: 0;
+  }
 </style>

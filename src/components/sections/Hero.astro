@@ -1,42 +1,89 @@
 ---
 import type { HeroProps } from '@/lib/sections/hero';
-const { headline, subtitle, ctaText, ctaUrl, image, variant = 'default', headingLevel } =
-  Astro.props as HeroProps;
+const {
+  headline,
+  subtitle,
+  ctaText,
+  ctaUrl,
+  image,
+  variant = 'default',
+  headingLevel,
+} = Astro.props as HeroProps;
 const Heading = `h${headingLevel}` as 'h1' | 'h2';
 ---
+
 <section class={`hero hero--${variant}`}>
   <div class="container hero__container">
     <div class="hero__content">
       <Heading class="hero__headline">{headline}</Heading>
       {subtitle && <p class="hero__subtitle">{subtitle}</p>}
-      {ctaText && ctaUrl && (
-        <a class="hero__cta" href={ctaUrl}>{ctaText}</a>
-      )}
+      {
+        ctaText && ctaUrl && (
+          <a class="hero__cta" href={ctaUrl}>
+            {ctaText}
+          </a>
+        )
+      }
     </div>
-    {image && (
-      <img
-        class="hero__image"
-        src={image.src}
-        alt={image.alt}
-        loading="eager"
-        fetchpriority="high"
-        decoding="async"
-      />
-    )}
+    {
+      image && (
+        <img
+          class="hero__image"
+          src={image.src}
+          alt={image.alt}
+          loading="eager"
+          fetchpriority="high"
+          decoding="async"
+        />
+      )
+    }
   </div>
 </section>
 
 <style>
-  .hero { padding-block: var(--space-section-y); }
-  .hero__container { display: grid; gap: var(--space-8); align-items: center; }
-  .hero--default .hero__container { grid-template-columns: 1fr; }
-  .hero--centered .hero__container { text-align: center; max-width: 50rem; }
-  @media (min-width: 768px) {
-    .hero--default .hero__container { grid-template-columns: 1.2fr 1fr; }
+  .hero {
+    padding-block: var(--space-section-y);
   }
-  .hero__headline { font-size: var(--font-size-hero); line-height: var(--line-height-tight); margin: 0 0 var(--space-4); }
-  .hero__subtitle { font-size: var(--font-size-lg); color: var(--color-muted); margin: 0 0 var(--space-6); }
-  .hero__cta { display: inline-block; padding: var(--space-3) var(--space-6); background: var(--color-accent); color: var(--color-accent-fg); text-decoration: none; border-radius: var(--radius-md); transition: opacity var(--transition-base); }
-  .hero__cta:hover { opacity: 0.85; }
-  .hero__image { border-radius: var(--radius-lg); }
+  .hero__container {
+    display: grid;
+    gap: var(--space-8);
+    align-items: center;
+  }
+  .hero--default .hero__container {
+    grid-template-columns: 1fr;
+  }
+  .hero--centered .hero__container {
+    text-align: center;
+    max-width: 50rem;
+  }
+  @media (min-width: 768px) {
+    .hero--default .hero__container {
+      grid-template-columns: 1.2fr 1fr;
+    }
+  }
+  .hero__headline {
+    font-size: var(--font-size-hero);
+    line-height: var(--line-height-tight);
+    margin: 0 0 var(--space-4);
+  }
+  .hero__subtitle {
+    font-size: var(--font-size-lg);
+    color: var(--color-muted);
+    margin: 0 0 var(--space-6);
+  }
+  .hero__cta {
+    display: inline-block;
+    padding: var(--space-3) var(--space-6);
+    background: var(--color-accent);
+    color: var(--color-accent-fg);
+    text-decoration: none;
+    border-radius: var(--radius-md);
+    transition: opacity var(--transition-base);
+  }
+  .hero__cta:hover {
+    opacity: 0.85;
+  }
+  .hero__image {
+    border-radius: var(--radius-lg);
+  }
 </style>
