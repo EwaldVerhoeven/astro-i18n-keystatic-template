@@ -1,0 +1,34 @@
+---
+import { sectionRegistry } from '@/lib/sections/registry';
+import type { Lang } from '@/i18n/utils';
+import type { SectionData, HeadingLevel } from '@/lib/sections/types';
+
+interface Props {
+  sections: SectionData[];
+  lang: Lang;
+}
+
+const { sections, lang } = Astro.props;
+
+// Heading hierarchy: if the first section is a Hero, it gets H1; otherwise all sections start at H2.
+let h1Claimed = false;
+const processed = sections.map((s) => {
+  let headingLevel: HeadingLevel = 2;
+  if (!h1Claimed && s._type === 'hero') {
+    headingLevel = 1;
+    h1Claimed = true;
+  }
+  return { ...s, headingLevel };
+});
+---
+{processed.map((section) => {
+  const entry = sectionRegistry[section._type];
+  if (!entry) {
+    if (import.meta.env.DEV) {
+      console.warn(`[SectionRenderer] Unknown section type: ${section._type}`);
+    }
+    return null;
+  }
+  const Component = entry.component;
+  return <Component {...section} lang={lang} />;
+})}
