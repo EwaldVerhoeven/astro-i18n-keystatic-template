@@ -1,0 +1,31 @@
+---
+export const prerender = true;
+
+import BaseLayout from '@/components/layout/BaseLayout.astro';
+import Nav from '@/components/layout/Nav.astro';
+import Footer from '@/components/layout/Footer.astro';
+import SectionRenderer from '@/components/SectionRenderer.astro';
+import { getCollection } from 'astro:content';
+import type { Lang } from '@/i18n/utils';
+
+export async function getStaticPaths() {
+  const pages = await getCollection('pages', (p) => p.data.slug === 'home');
+  return pages.map((page) => ({
+    params: { lang: page.data.lang },
+    props: { page },
+  }));
+}
+
+const { page } = Astro.props;
+const lang = page.data.lang as Lang;
+---
+<BaseLayout
+  lang={lang}
+  pageTitle={page.data.title}
+  seo={page.data.seo}
+  translationKey={page.data.translationKey}
+>
+  <Nav slot="header" lang={lang} translationKey={page.data.translationKey} />
+  <SectionRenderer sections={page.data.sections} lang={lang} />
+  <Footer slot="footer" lang={lang} />
+</BaseLayout>

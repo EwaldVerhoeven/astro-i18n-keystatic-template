@@ -1,0 +1,23 @@
+---
+export const prerender = true;
+
+import BaseLayout from '@/components/layout/BaseLayout.astro';
+import Nav from '@/components/layout/Nav.astro';
+import Footer from '@/components/layout/Footer.astro';
+import { getLangFromUrl } from '@/i18n/utils';
+
+const lang = getLangFromUrl(Astro.url);
+---
+<BaseLayout
+  lang={lang}
+  pageTitle="404"
+  seo={{ description: 'Page not found.', noindex: true }}
+>
+  <Nav slot="header" lang={lang} />
+  <section class="container" style="padding-block: var(--space-section-y); text-align: center;">
+    <h1>404</h1>
+    <p>Page not found.</p>
+    <a href={`/${lang}/`}>← Back to home</a>
+  </section>
+  <Footer slot="footer" lang={lang} />
+</BaseLayout>
