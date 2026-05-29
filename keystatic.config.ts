@@ -81,6 +81,116 @@ const ctaBlock = fields.object({
   }),
 });
 
+const faqBlock = fields.object({
+  title: fields.text({ label: 'Title' }),
+  items: fields.array(
+    fields.object({
+      question: fields.text({ label: 'Question' }),
+      answer: fields.text({ label: 'Answer', multiline: true }),
+    }),
+    { label: 'Items', itemLabel: (p) => p.fields.question.value || 'Question' }
+  ),
+});
+
+const testimonialsBlock = fields.object({
+  title: fields.text({ label: 'Title' }),
+  layout: fields.select({
+    label: 'Layout',
+    options: [{ label: 'Grid', value: 'grid' }, { label: 'Single', value: 'single' }],
+    defaultValue: 'grid',
+  }),
+  items: fields.array(
+    fields.object({
+      quote: fields.text({ label: 'Quote', multiline: true }),
+      authorName: fields.text({ label: 'Author name' }),
+      authorRole: fields.text({ label: 'Author role' }),
+      authorOrg: fields.text({ label: 'Organization' }),
+      authorPhoto: fields.object({
+        src: fields.image({ label: 'Photo', directory: 'public/testimonials', publicPath: '/testimonials/' }),
+        alt: fields.text({ label: 'Alt text' }),
+      }),
+      rating: fields.select({
+        label: 'Rating',
+        options: [
+          { label: 'None', value: '' },
+          { label: '1', value: '1' }, { label: '2', value: '2' },
+          { label: '3', value: '3' }, { label: '4', value: '4' }, { label: '5', value: '5' },
+        ],
+        defaultValue: '',
+      }),
+    }),
+    { label: 'Testimonials', itemLabel: (p) => p.fields.authorName.value || 'Testimonial' }
+  ),
+});
+
+const blogPreviewBlock = fields.object({
+  title: fields.text({ label: 'Title' }),
+  limit: fields.integer({ label: 'Limit', defaultValue: 3, validation: { min: 1, max: 10 } }),
+});
+
+const pricingBlock = fields.object({
+  title: fields.text({ label: 'Title' }),
+  plans: fields.array(
+    fields.object({
+      name: fields.text({ label: 'Plan name' }),
+      price: fields.text({ label: 'Display price (e.g. €29)' }),
+      priceAmount: fields.integer({ label: 'Numeric amount (for JSON-LD)' }),
+      currency: fields.text({ label: 'Currency code (e.g. EUR)' }),
+      interval: fields.select({
+        label: 'Billing interval',
+        options: [
+          { label: 'One-time', value: 'once' },
+          { label: 'Monthly', value: 'month' },
+          { label: 'Yearly', value: 'year' },
+        ],
+        defaultValue: 'month',
+      }),
+      description: fields.text({ label: 'Description', multiline: true }),
+      features: fields.array(fields.text({ label: 'Feature' }), { label: 'Features' }),
+      ctaText: fields.text({ label: 'CTA text' }),
+      ctaUrl: fields.text({ label: 'CTA URL' }),
+      highlighted: fields.checkbox({ label: 'Highlight this plan', defaultValue: false }),
+    }),
+    { label: 'Plans', itemLabel: (p) => p.fields.name.value || 'Plan' }
+  ),
+});
+
+const imageTextBlock = fields.object({
+  title: fields.text({ label: 'Title' }),
+  body: fields.text({ label: 'Body', multiline: true }),
+  image: fields.object({
+    src: fields.image({ label: 'Image', directory: 'public/sections', publicPath: '/sections/' }),
+    alt: fields.text({ label: 'Alt text' }),
+  }),
+  imagePosition: fields.select({
+    label: 'Image position',
+    options: [{ label: 'Left', value: 'left' }, { label: 'Right', value: 'right' }],
+    defaultValue: 'right',
+  }),
+  ctaText: fields.text({ label: 'CTA text' }),
+  ctaUrl: fields.text({ label: 'CTA URL' }),
+});
+
+const logoWallBlock = fields.object({
+  title: fields.text({ label: 'Title' }),
+  grayscale: fields.checkbox({ label: 'Grayscale', defaultValue: true }),
+  logos: fields.array(
+    fields.object({
+      src: fields.image({ label: 'Logo', directory: 'public/logos', publicPath: '/logos/' }),
+      alt: fields.text({ label: 'Alt text' }),
+      url: fields.text({ label: 'Optional URL' }),
+    }),
+    { label: 'Logos', itemLabel: (p) => p.fields.alt.value || 'Logo' }
+  ),
+});
+
+const contactFormBlock = fields.object({
+  title: fields.text({ label: 'Title' }),
+  description: fields.text({ label: 'Description', multiline: true }),
+  submitText: fields.text({ label: 'Submit button text', defaultValue: 'Send' }),
+  successRedirect: fields.text({ label: 'Success redirect URL (optional)' }),
+});
+
 export default config({
   storage: { kind: 'cloud' },
   cloud: { project: '__KEYSTATIC_PROJECT__' },
@@ -137,10 +247,17 @@ export default config({
         seo: seoField,
         sections: fields.blocks(
           {
-            hero:        { label: 'Hero',         schema: heroBlock },
-            richText:    { label: 'Rich text',    schema: richTextBlock },
-            featureGrid: { label: 'Feature grid', schema: featureGridBlock },
-            cta:         { label: 'CTA',          schema: ctaBlock },
+            hero:         { label: 'Hero',         schema: heroBlock },
+            richText:     { label: 'Rich text',    schema: richTextBlock },
+            featureGrid:  { label: 'Feature grid', schema: featureGridBlock },
+            cta:          { label: 'CTA',          schema: ctaBlock },
+            faq:          { label: 'FAQ',          schema: faqBlock },
+            testimonials: { label: 'Testimonials', schema: testimonialsBlock },
+            blogPreview:  { label: 'Blog preview', schema: blogPreviewBlock },
+            pricing:      { label: 'Pricing',      schema: pricingBlock },
+            imageText:    { label: 'Image + text', schema: imageTextBlock },
+            logoWall:     { label: 'Logo wall',    schema: logoWallBlock },
+            contactForm:  { label: 'Contact form', schema: contactFormBlock },
           },
           { label: 'Sections' }
         ),
@@ -163,10 +280,17 @@ export default config({
         seo: seoField,
         sections: fields.blocks(
           {
-            hero:        { label: 'Hero',         schema: heroBlock },
-            richText:    { label: 'Rich text',    schema: richTextBlock },
-            featureGrid: { label: 'Feature grid', schema: featureGridBlock },
-            cta:         { label: 'CTA',          schema: ctaBlock },
+            hero:         { label: 'Hero',         schema: heroBlock },
+            richText:     { label: 'Rich text',    schema: richTextBlock },
+            featureGrid:  { label: 'Feature grid', schema: featureGridBlock },
+            cta:          { label: 'CTA',          schema: ctaBlock },
+            faq:          { label: 'FAQ',          schema: faqBlock },
+            testimonials: { label: 'Testimonials', schema: testimonialsBlock },
+            blogPreview:  { label: 'Blog preview', schema: blogPreviewBlock },
+            pricing:      { label: 'Pricing',      schema: pricingBlock },
+            imageText:    { label: 'Image + text', schema: imageTextBlock },
+            logoWall:     { label: 'Logo wall',    schema: logoWallBlock },
+            contactForm:  { label: 'Contact form', schema: contactFormBlock },
           },
           { label: 'Sections' }
         ),
