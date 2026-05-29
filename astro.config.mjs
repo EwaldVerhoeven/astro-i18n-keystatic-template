@@ -1,6 +1,7 @@
 import { defineConfig } from 'astro/config';
 import netlify from '@astrojs/netlify';
 import sitemap from '@astrojs/sitemap';
+import keystatic from '@keystatic/astro';
 
 // The __SITE_URL__ / __DEFAULT_LANG__ placeholders are replaced by setup.sh.
 // Until then, these guards keep `astro check` / `astro build` working on the
@@ -25,6 +26,7 @@ export default defineConfig({
     },
   },
   integrations: [
+    keystatic(),
     sitemap({
       i18n: {
         defaultLocale,
