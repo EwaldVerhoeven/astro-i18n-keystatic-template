@@ -141,3 +141,25 @@ dist
 vite.config.js.timestamp-*
 vite.config.ts.timestamp-*
 .vite/
+
+# build output
+dist/
+.netlify/
+
+# astro
+.astro/
+
+# env
+.env
+.env.local
+.env.production
+
+# setup archive
+.setup-archive/
+
+# macOS
+.DS_Store
+
+# editors
+.vscode/
+.idea/
