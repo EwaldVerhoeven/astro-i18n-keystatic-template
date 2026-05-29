@@ -56,7 +56,7 @@
       "_type": "faq",
       "title": "Frequently asked questions",
       "items": [
-        { "question": "Which Astro version is used?", "answer": "Astro 6.3.8 with TypeScript strictest." },
+        { "question": "Which Astro version is used?", "answer": "Astro 6.4.2 with TypeScript strictest." },
         { "question": "Can I add languages?", "answer": "Yes — add a translation file in src/i18n/ and update astro.config.mjs." }
       ]
     },
