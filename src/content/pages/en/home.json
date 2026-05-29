@@ -4,7 +4,7 @@
   "lang": "en",
   "translationKey": "home",
   "seo": {
-    "description": "An example homepage for the astro-i18n-keystatic-template. Customize this text via Keystatic or by editing this JSON file directly."
+    "description": "Example homepage of the astro-i18n-keystatic-template, demonstrating all 11 sections. Customize this content via Keystatic or in this JSON file."
   },
   "sections": [
     {
@@ -16,22 +16,67 @@
       "variant": "centered"
     },
     {
+      "_type": "logoWall",
+      "title": "Trusted by",
+      "grayscale": true,
+      "logos": []
+    },
+    {
       "_type": "featureGrid",
       "eyebrow": "Features",
       "title": "Everything you need",
       "columns": "3",
       "features": [
-        { "title": "i18n out of the box", "description": "Dutch and English by default, easy to extend." },
-        { "title": "Keystatic CMS", "description": "Editors update pages through a visual admin." },
-        { "title": "SEO-friendly", "description": "Meta tags, sitemap, hreflang and structured data baked in." }
+        { "title": "i18n out of the box", "description": "Dutch and English by default." },
+        { "title": "Keystatic CMS", "description": "Visual admin for editors." },
+        { "title": "SEO baked in", "description": "Meta tags, sitemap, hreflang, JSON-LD." }
       ]
+    },
+    {
+      "_type": "imageText",
+      "title": "Modular architecture",
+      "body": "Build pages from reusable sections. Add, remove, or reorder without touching code.",
+      "image": { "src": "/sections/placeholder.png", "alt": "Admin screenshot" },
+      "imagePosition": "right",
+      "ctaText": "Learn more",
+      "ctaUrl": "/en/blog/"
+    },
+    {
+      "_type": "testimonials",
+      "title": "What clients say",
+      "layout": "grid",
+      "items": []
+    },
+    {
+      "_type": "pricing",
+      "title": "Simple pricing",
+      "plans": []
+    },
+    {
+      "_type": "faq",
+      "title": "Frequently asked questions",
+      "items": [
+        { "question": "Which Astro version is used?", "answer": "Astro 6.3.8 with TypeScript strictest." },
+        { "question": "Can I add languages?", "answer": "Yes — add a translation file in src/i18n/ and update astro.config.mjs." }
+      ]
+    },
+    {
+      "_type": "blogPreview",
+      "title": "Latest articles",
+      "limit": 3
     },
     {
       "_type": "richText",
       "maxWidth": "narrow",
       "content": [
-        { "type": "paragraph", "children": [{ "text": "Replace this text with your own intro via Keystatic or by editing this file." }] }
+        { "type": "paragraph", "children": [{ "text": "Replace this text with your own intro." }] }
       ]
+    },
+    {
+      "_type": "contactForm",
+      "title": "Contact",
+      "description": "Fill out the form and we'll get back to you soon.",
+      "submitText": "Send"
     },
     {
       "_type": "cta",

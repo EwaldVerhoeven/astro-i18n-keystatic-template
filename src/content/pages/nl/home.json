@@ -4,7 +4,7 @@
   "lang": "nl",
   "translationKey": "home",
   "seo": {
-    "description": "Een voorbeeld-homepage voor de astro-i18n-keystatic-template. Pas deze tekst aan in Keystatic of direct in dit JSON-bestand."
+    "description": "Voorbeeld-homepage van de astro-i18n-keystatic-template, met alle 11 secties als demonstratie. Pas deze content aan in Keystatic of in dit JSON-bestand."
   },
   "sections": [
     {
@@ -16,22 +16,67 @@
       "variant": "centered"
     },
     {
+      "_type": "logoWall",
+      "title": "Vertrouwd door",
+      "grayscale": true,
+      "logos": []
+    },
+    {
       "_type": "featureGrid",
       "eyebrow": "Features",
       "title": "Alles wat je nodig hebt",
       "columns": "3",
       "features": [
-        { "title": "i18n out of the box", "description": "Nederlands en Engels standaard, eenvoudig uit te breiden." },
-        { "title": "Keystatic CMS", "description": "Editors bewerken pagina's via een visuele admin." },
-        { "title": "SEO-vriendelijk", "description": "Meta-tags, sitemap, hreflang en structured data ingebakken." }
+        { "title": "i18n out of the box", "description": "Nederlands en Engels standaard." },
+        { "title": "Keystatic CMS", "description": "Visuele admin voor editors." },
+        { "title": "SEO ingebakken", "description": "Meta tags, sitemap, hreflang, JSON-LD." }
       ]
+    },
+    {
+      "_type": "imageText",
+      "title": "Modulaire architectuur",
+      "body": "Bouw pagina's uit herbruikbare secties. Voeg toe, verwijder of herorden zonder code aan te raken.",
+      "image": { "src": "/sections/placeholder.png", "alt": "Schermafbeelding van de admin" },
+      "imagePosition": "right",
+      "ctaText": "Lees meer",
+      "ctaUrl": "/nl/blog/"
+    },
+    {
+      "_type": "testimonials",
+      "title": "Wat klanten zeggen",
+      "layout": "grid",
+      "items": []
+    },
+    {
+      "_type": "pricing",
+      "title": "Eenvoudige prijzen",
+      "plans": []
+    },
+    {
+      "_type": "faq",
+      "title": "Veelgestelde vragen",
+      "items": [
+        { "question": "Welke Astro-versie wordt gebruikt?", "answer": "Astro 6.3.8 met TypeScript strictest." },
+        { "question": "Kan ik talen toevoegen?", "answer": "Ja — voeg een vertaalbestand toe in src/i18n/ en update astro.config.mjs." }
+      ]
+    },
+    {
+      "_type": "blogPreview",
+      "title": "Laatste artikelen",
+      "limit": 3
     },
     {
       "_type": "richText",
       "maxWidth": "narrow",
       "content": [
-        { "type": "paragraph", "children": [{ "text": "Vervang deze tekst met je eigen inleiding via Keystatic of direct in dit bestand." }] }
+        { "type": "paragraph", "children": [{ "text": "Vervang deze tekst met je eigen inleiding." }] }
       ]
+    },
+    {
+      "_type": "contactForm",
+      "title": "Contact",
+      "description": "Vul het formulier in en we nemen snel contact op.",
+      "submitText": "Verstuur"
     },
     {
       "_type": "cta",
