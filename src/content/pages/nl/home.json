@@ -1,0 +1,45 @@
+{
+  "title": "Welkom",
+  "slug": "home",
+  "lang": "nl",
+  "translationKey": "home",
+  "seo": {
+    "description": "Een voorbeeld-homepage voor de astro-i18n-keystatic-template. Pas deze tekst aan in Keystatic of direct in dit JSON-bestand."
+  },
+  "sections": [
+    {
+      "_type": "hero",
+      "headline": "Bouw snelle, meertalige websites",
+      "subtitle": "Een Astro-gebaseerde starter met CMS, design tokens en SEO-baseline.",
+      "ctaText": "Aan de slag",
+      "ctaUrl": "#features",
+      "variant": "centered"
+    },
+    {
+      "_type": "featureGrid",
+      "eyebrow": "Features",
+      "title": "Alles wat je nodig hebt",
+      "columns": "3",
+      "features": [
+        { "title": "i18n out of the box", "description": "Nederlands en Engels standaard, eenvoudig uit te breiden." },
+        { "title": "Keystatic CMS", "description": "Editors bewerken pagina's via een visuele admin." },
+        { "title": "SEO-vriendelijk", "description": "Meta-tags, sitemap, hreflang en structured data ingebakken." }
+      ]
+    },
+    {
+      "_type": "richText",
+      "maxWidth": "narrow",
+      "content": [
+        { "type": "paragraph", "children": [{ "text": "Vervang deze tekst met je eigen inleiding via Keystatic of direct in dit bestand." }] }
+      ]
+    },
+    {
+      "_type": "cta",
+      "title": "Klaar om te beginnen?",
+      "description": "Run setup.sh en personaliseer je site in minuten.",
+      "primaryText": "Bekijk de docs",
+      "primaryUrl": "/nl/blog/",
+      "variant": "inverted"
+    }
+  ]
+}

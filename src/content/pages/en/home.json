@@ -1,0 +1,45 @@
+{
+  "title": "Welcome",
+  "slug": "home",
+  "lang": "en",
+  "translationKey": "home",
+  "seo": {
+    "description": "An example homepage for the astro-i18n-keystatic-template. Customize this text via Keystatic or by editing this JSON file directly."
+  },
+  "sections": [
+    {
+      "_type": "hero",
+      "headline": "Build fast, multilingual websites",
+      "subtitle": "An Astro-based starter with CMS, design tokens, and SEO baseline.",
+      "ctaText": "Get started",
+      "ctaUrl": "#features",
+      "variant": "centered"
+    },
+    {
+      "_type": "featureGrid",
+      "eyebrow": "Features",
+      "title": "Everything you need",
+      "columns": "3",
+      "features": [
+        { "title": "i18n out of the box", "description": "Dutch and English by default, easy to extend." },
+        { "title": "Keystatic CMS", "description": "Editors update pages through a visual admin." },
+        { "title": "SEO-friendly", "description": "Meta tags, sitemap, hreflang and structured data baked in." }
+      ]
+    },
+    {
+      "_type": "richText",
+      "maxWidth": "narrow",
+      "content": [
+        { "type": "paragraph", "children": [{ "text": "Replace this text with your own intro via Keystatic or by editing this file." }] }
+      ]
+    },
+    {
+      "_type": "cta",
+      "title": "Ready to start?",
+      "description": "Run setup.sh and personalize your site in minutes.",
+      "primaryText": "Read the docs",
+      "primaryUrl": "/en/blog/",
+      "variant": "inverted"
+    }
+  ]
+}

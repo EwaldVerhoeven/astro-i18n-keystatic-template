@@ -1,0 +1,15 @@
+{
+  "siteName": "__PROJECT_NAME__",
+  "defaultOgImage": "/og/default.png",
+  "organization": {
+    "name": "__ORG_NAME__",
+    "logo": "/logo.png",
+    "url": "__SITE_URL__",
+    "sameAs": []
+  },
+  "googleSiteVerification": "__GSV_TOKEN__",
+  "analytics": {
+    "provider": "none",
+    "siteId": ""
+  }
+}
